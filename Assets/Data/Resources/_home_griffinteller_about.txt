@@ -1,0 +1,3 @@
+Hello! My name's Griffin and this is my about page :P
+
+<i>yay!</i>
