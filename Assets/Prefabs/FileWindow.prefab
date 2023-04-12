@@ -1943,7 +1943,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: /Users/griffinteller
+  m_text: griffinteller
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe5a96a84536a152b8be65213b689025, type: 2}
   m_sharedMaterial: {fileID: 3869665596319227376, guid: fe5a96a84536a152b8be65213b689025, type: 2}
@@ -2251,7 +2251,7 @@ GameObject:
   - component: {fileID: 4982363163818329943}
   m_Layer: 5
   m_Name: FileWindow
-  m_TagString: File Window
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2291,14 +2291,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fileStructure: {fileID: 4900000, guid: 4640308a56108874d8bdb8c0e04bd8ef, type: 3}
-  EntryColumns:
+  entryColumns:
   - {fileID: 4982363162613165089}
   - {fileID: 4982363162493543986}
   - {fileID: 4982363162427870865}
   tabsTransform: {fileID: 4982363164153907571}
   entryTextPrefab: {fileID: 4187918011021077196, guid: 5620763904bbe023ea0e3e1a2ae074ae, type: 3}
   selectionBarPrefab: {fileID: 9156468353886699297, guid: 57e0b9c8183cf9d76ad008716f5f7bd0, type: 3}
-  textWindowPrefab: {fileID: 6040755704046652733, guid: 2d9324ffcd17af542b67a856ab88c631, type: 3}
   maxSelectionBarY: -100
   selectionBarSeparation: 50
   topDirectoryName: /home/griffinteller/
@@ -2376,8 +2375,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 342, y: 0}
-  m_SizeDelta: {x: 374.54, y: 51.68}
+  m_AnchoredPosition: {x: 280, y: 0}
+  m_SizeDelta: {x: 260, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4982363163957697120
 CanvasRenderer:

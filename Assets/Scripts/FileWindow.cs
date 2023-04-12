@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UIElements;
 using System.IO;
+using UnityEngine.Serialization;
 
 public class FileWindow : MonoBehaviour
 {
@@ -40,10 +41,10 @@ public class FileWindow : MonoBehaviour
         new FileWindowEntry("/..", FileWindowEntry.FileType.UpDirectory, "")
     };
 
-    private List<FileWindowEntry> Entries;
+    private List<FileWindowEntry> _entries;
 
     public TextAsset fileStructure;
-    public List<GameObject> EntryColumns = new ();
+    public List<GameObject> entryColumns = new ();
     public Transform tabsTransform;
     public GameObject entryTextPrefab;
     public GameObject selectionBarPrefab;
@@ -76,8 +77,8 @@ public class FileWindow : MonoBehaviour
     // load entries from structure file into FileStructure tree
     private void LoadEntries()
     {
-        Entries = new List<FileWindowEntry>();
-        Entries.AddRange(EntriesHeader);
+        _entries = new List<FileWindowEntry>();
+        _entries.AddRange(EntriesHeader);
         
         for (int i = 0; i < _currentDirectory.files.Count; i++)
         {
@@ -101,13 +102,13 @@ public class FileWindow : MonoBehaviour
                     throw new ArgumentException("Unknown file type");
             }
 
-            Entries.Add(new FileWindowEntry(file.name, type, TypeToPermission[type]));
+            _entries.Add(new FileWindowEntry(file.name, type, TypeToPermission[type]));
         }
     }
 
     private void DrawEntries()
     {
-        foreach (GameObject column in EntryColumns)
+        foreach (GameObject column in entryColumns)
         {
             foreach (Transform child in column.transform)
             {
@@ -115,12 +116,12 @@ public class FileWindow : MonoBehaviour
             }
         }
 
-        foreach (FileWindowEntry entry in Entries)
+        foreach (FileWindowEntry entry in _entries)
         {
             string[] entryData = entry.GetData();
             for (int i = 0; i < entryData.Length; i++)
             {
-                GameObject column = EntryColumns[i];
+                GameObject column = entryColumns[i];
                 GameObject textObj = Instantiate(entryTextPrefab, column.transform);
                 TextMeshProUGUI text = textObj.GetComponent<TextMeshProUGUI>();
                 text.text = entryData[i];
@@ -143,7 +144,7 @@ public class FileWindow : MonoBehaviour
             (int indent, string line) = GetIndent(rawLine);
 
             if (indent > lastIndent)
-                currentDir = (FileStructure.Directory) currentDir.files[currentDir.files.Count - 1];
+                currentDir = (FileStructure.Directory) currentDir.files[^1];
 
             else if (indent < lastIndent)
                 for (int i = 0; i < lastIndent - indent; i++)
@@ -152,7 +153,7 @@ public class FileWindow : MonoBehaviour
             lastIndent = indent;
 
             FileStructure.File newFile;
-            if (line.Length > 1 && line[line.Length - 1] == '/')
+            if (line.Length > 1 && line[^1] == '/')
                 newFile = new FileStructure.Directory(line, currentDir);
 
             else if (line.Length > 4 && line.Substring(line.Length - 4) == ".txt")
@@ -178,7 +179,7 @@ public class FileWindow : MonoBehaviour
                 break;
         }
 
-        return (spaces / 4, rawLine.Substring(spaces, rawLine.Length - spaces - 1)); // -1 is for windows line endings 😩
+        return (spaces / 4, rawLine.Substring(spaces, rawLine.Length - spaces));
     }
 
     public void Update()
@@ -189,19 +190,19 @@ public class FileWindow : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            SetSelection(Mathf.Min(Entries.Count - 2, _selectionIndex + 1));
+            SetSelection(Mathf.Min(_entries.Count - 2, _selectionIndex + 1));
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
             // +1 is because selection index of 0 is second entry (because of title entry)
-            if (Entries[_selectionIndex + 1].type == FileWindowEntry.FileType.Directory)
+            if (_entries[_selectionIndex + 1].type == FileWindowEntry.FileType.Directory)
             {
                 _currentDirectory = (FileStructure.Directory) _currentDirectory.files[_selectionIndex - 1]; // -1 because up--dir is not in files
                 RefreshDirectory();
             }
 
-            else if (Entries[_selectionIndex + 1].type == FileWindowEntry.FileType.UpDirectory && _currentDirectory.parent != null)
+            else if (_entries[_selectionIndex + 1].type == FileWindowEntry.FileType.UpDirectory && _currentDirectory.parent != null)
             {
                 _currentDirectory = _currentDirectory.parent;
                 RefreshDirectory();
@@ -283,7 +284,7 @@ namespace FileStructure
         public Directory(string name, Directory parent) : base(name)
         {
             this.parent = parent;
-            path = parent?.path ?? "" + name;
+            path = (parent?.path ?? "") + name;
         }
 
         public void AddFile(File file)
