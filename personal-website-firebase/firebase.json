@@ -8,50 +8,20 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "/",
         "destination": "/index.html"
       }
     ],
-    "headers": [ 
+    "headers": [
       {
-        "source": "**/*.data.br",
-        "headers": [
-          {
-            "key": "Content-Type",
-            "value": "application/octet-stream"
-          },
-          {
-            "key": "Content-Encoding",
-            "value": "br"
-          }
-        ]
-      },
-      {
-        "source": "**/*.wasm.br",
-        "headers": [
-          {
-            "key": "Content-Type",
-            "value": "application/wasm"
-          },
-          {
-            "key": "Content-Encoding",
-            "value": "br"
-          }
-        ]
-      },
-      {
-        "source": "**/*.js.br",
-        "headers": [
-          {
-            "key": "Content-Type",
-            "value": "application/javascript"
-          },
-          {
-            "key": "Content-Encoding",
-            "value": "br"
-          }
-        ]
+          "source": "**",
+          "headers": [
+              {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+              }
+          ]
       }
-   ]
+    ]
   }
 }
