@@ -6,7 +6,7 @@ public class WindowManager : MonoBehaviour
 {
     public static WindowManager Instance { get; private set; }
 
-    private readonly Dictionary<string, GameObject> _windows = new Dictionary<string, GameObject>();
+    private readonly Dictionary<string, GameObject> _windows = new ();
     private GameObject _activeWindow;
 
     public void Awake()
