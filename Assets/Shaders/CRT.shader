@@ -1,6 +1,7 @@
 Shader "Post/CRT" {
     Properties {
         _CRTTex ("CRT Texture", 2D) = "black" {}
+        _NoBandTex ("No Banding Texture", 2D) = "black" {}
         _Curvature ("Curvature", float) = 1.0
         _Power ("Power", Range(2, 100)) = 2.0
         _Depth ("Depth", float) = 1.0
@@ -19,7 +20,8 @@ Shader "Post/CRT" {
 
             #define TAU 6.28318530718
 
-            uniform sampler2D _CRTTex;
+            uniform Texture2D _CRTTex;
+            uniform Texture2D _NoBandTex;
             uniform float _Curvature;
             uniform float _Depth;
             uniform float _BandingFreq;
@@ -27,6 +29,8 @@ Shader "Post/CRT" {
             uniform float _Brightness;
             uniform float _Power;
             uniform float _VignetteRoundness;
+
+            uniform SamplerState linear_clamp_sampler;
 
             // Bend the screen
             float2 get_new_uv(float2 uv)
@@ -45,11 +49,16 @@ Shader "Post/CRT" {
 
             float4 frag(v2f_img i) : COLOR {
                 float2 uv = get_new_uv(i.uv);
-                float4 raw_col = tex2D(_CRTTex, uv);
+                float4 raw_col = _CRTTex.Sample(linear_clamp_sampler, uv);
                 float2 sins = get_sin_bounds(uv * _BandingFreq, float2(0.1, 0.1), float2(1.0, 1.0));
-                float4 col = float4(raw_col.xyz * pow(sins.x * sins.y, _Opacity), 1.0);
+
+                float3 unbanded_col = min(raw_col.xyz * _Brightness.xxx, 1);
+                float4 banded_col = float4(unbanded_col * pow(sins.x * sins.y, _Opacity), 1.0);
+                float4 no_band_col = _NoBandTex.Sample(linear_clamp_sampler, uv);
+                float4 col = no_band_col.a < 0.5 ? banded_col : no_band_col;
+                
                 float2 vignette = -pow(2.0 * abs(uv - float2(0.5, 0.5)), 1.0 / _VignetteRoundness) + float2(1, 1);
-                return col * float4(_Brightness.xxx, 1.0) * vignette.x * vignette.y;
+                return col * vignette.x * vignette.y;
             }
             ENDCG
         }

@@ -1,3 +1,6 @@
-Projects/
+projects/
+    bloom.txt
+    LAPSIM.txt
+    torus_terrain.txt
     autonowar.txt
 about.txt

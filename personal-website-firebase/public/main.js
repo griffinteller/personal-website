@@ -8,7 +8,7 @@ const canvas = document.querySelector("canvas");
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
-//Create a listener to resize the canvas when the window is resized
+// Create a listener to resize the canvas when the window is resized
 window.addEventListener("resize", function() {
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight

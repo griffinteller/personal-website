@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class LinkButton : MonoBehaviour
-{
-    public string url;
+public class LinkButton : MonoBehaviour {
+    [SerializeField] string url;
 
-    // Update is called once per frame
-    public void Open() {
-        print("hello");
-        Application.OpenURL(url);
+    public void Start() {
+        GetComponent<Button>().onClick.AddListener(() => Application.OpenURL(url));
     }
 }

@@ -33,7 +33,7 @@ public class WindowManager : MonoBehaviour
     {
         if (!_windows.ContainsKey(name))
         {
-            throw new ArgumentException("Window not found.");
+            throw new ArgumentException("Window not found: " + name);
         }
 
         _activeWindow.SetActive(false);
