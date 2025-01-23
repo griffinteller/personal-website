@@ -2512,7 +2512,7 @@ VideoPlayer:
   - {fileID: 0}
   m_DirectAudioVolumes:
   - 1
-  m_Url: https://www.griffinteller.com/media/torus.mp4
+  m_Url: https://www.griffinteller.com/assets/torus.mp4
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 01
   m_ControlledAudioTrackCount: 1
@@ -3120,7 +3120,7 @@ VideoPlayer:
   - {fileID: 0}
   m_DirectAudioVolumes:
   - 1
-  m_Url: https://www.griffinteller.com/media/autonowar.mp4
+  m_Url: https://www.griffinteller.com/assets/autonowar.mp4
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 01
   m_ControlledAudioTrackCount: 1
@@ -5286,7 +5286,7 @@ VideoPlayer:
   - {fileID: 0}
   m_DirectAudioVolumes:
   - 1
-  m_Url: https://www.griffinteller.com/media/bloom.mp4
+  m_Url: https://www.griffinteller.com/assets/bloom.mp4
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 01
   m_ControlledAudioTrackCount: 1
